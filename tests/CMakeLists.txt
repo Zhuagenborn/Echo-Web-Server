@@ -14,11 +14,16 @@ target_link_libraries(test-bundle
 target_sources(test-bundle
     PRIVATE
         util_test.cpp
+        containers/buffer_test.cpp
+        io_test.cpp
 )
 
 target_link_libraries(test-bundle
     PRIVATE
         util
+        test-util
+        buffer
+        io
 )
 
 gtest_discover_tests(test-bundle)

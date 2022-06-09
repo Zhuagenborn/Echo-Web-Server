@@ -7,3 +7,5 @@ target_sources(${CMAKE_PROJECT_NAME}
 
 add_subdirectory(util)
 add_subdirectory(test_util)
+add_subdirectory(containers)
+add_subdirectory(io)
