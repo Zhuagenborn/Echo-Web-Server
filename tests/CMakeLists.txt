@@ -17,6 +17,7 @@ target_sources(test-bundle
         containers/buffer_test.cpp
         io_test.cpp
         config_test.cpp
+        containers/block_deque_test.cpp
 )
 
 target_link_libraries(test-bundle
@@ -26,6 +27,7 @@ target_link_libraries(test-bundle
         buffer
         io
         config
+        block-deque
 )
 
 gtest_discover_tests(test-bundle)
