@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "log.h"
 #include "util.h"
 
 #include <string>
@@ -40,5 +41,8 @@ std::string TestName() noexcept;
  * @exception std::system_error Failed to create a temporary file.
  */
 std::pair<FileDescriptor, std::string> CreateTempTestFile();
+
+//! Get a logger for tests.
+log::Logger::Ptr TestLogger() noexcept;
 
 }  // namespace ws::test
