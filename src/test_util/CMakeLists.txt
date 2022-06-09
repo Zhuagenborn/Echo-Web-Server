@@ -14,6 +14,7 @@ target_sources(test-util
 target_link_libraries(test-util
     PUBLIC
         util
+        log
     PRIVATE
         ${GTEST_LIBS}
         ${GMOCK_LIBS}

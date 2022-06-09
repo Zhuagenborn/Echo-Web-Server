@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include <filesystem>
+#include <mutex>
 
 
 namespace ws::test {
@@ -26,6 +27,17 @@ std::pair<FileDescriptor, std::string> CreateTempTestFile() {
     } else {
         ThrowLastSystemError();
     }
+}
+
+log::Logger::Ptr TestLogger() noexcept {
+    static std::once_flag init_flag;
+    static const auto ins {
+        std::make_shared<log::Logger>("unit-test", log::Level::Debug)};
+    std::call_once(init_flag, []() noexcept {
+        ins->AddAppender(std::make_shared<log::StdOutAppender>());
+    });
+
+    return ins;
 }
 
 }  // namespace ws::test
