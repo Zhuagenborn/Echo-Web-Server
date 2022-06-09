@@ -20,6 +20,7 @@ target_sources(test-bundle
         containers/block_deque_test.cpp
         log_test.cpp
         containers/heap_timer_test.cpp
+        containers/thread_pool_test.cpp
 )
 
 target_link_libraries(test-bundle
@@ -32,6 +33,7 @@ target_link_libraries(test-bundle
         block-deque
         log
         heap-timer
+        thread-pool
 )
 
 gtest_discover_tests(test-bundle)
