@@ -16,6 +16,7 @@ target_sources(integrated-tests
         util_test.cpp
         containers/buffer_test.cpp
         io_test.cpp
+        config_test.cpp
 )
 
 target_link_libraries(integrated-tests
@@ -24,6 +25,7 @@ target_link_libraries(integrated-tests
         test-util
         buffer
         io
+        config
 )
 
 gtest_discover_tests(integrated-tests)
