@@ -19,6 +19,7 @@ target_sources(integrated-tests
         config_test.cpp
         containers/block_deque_test.cpp
         log_test.cpp
+        containers/heap_timer_test.cpp
 )
 
 target_link_libraries(integrated-tests
@@ -30,6 +31,7 @@ target_link_libraries(integrated-tests
         config
         block-deque
         log
+        heap-timer
 )
 
 gtest_discover_tests(integrated-tests)
