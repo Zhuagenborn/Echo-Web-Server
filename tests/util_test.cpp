@@ -30,6 +30,47 @@ TEST(StringTest, LetterCaseConversion) {
     EXPECT_EQ(StringToUpper(""), "");
 }
 
+TEST(StringTest, ReplaceString) {
+    // No matched sub-strings.
+    EXPECT_EQ(ReplaceAllSubstring("", "a", "A"), "");
+    EXPECT_EQ(ReplaceAllSubstring("b", "a", "A"), "b");
+
+    EXPECT_EQ(ReplaceAllSubstring("a", "a", ""), "");
+    EXPECT_EQ(ReplaceAllSubstring("a b", "a", "A"), "A b");
+    EXPECT_EQ(ReplaceAllSubstring("a a", "a", "A"), "A A");
+    EXPECT_EQ(ReplaceAllSubstring("a aa b", "a", "A"), "A AA b");
+}
+
+TEST(StringTest, SplitString) {
+    // No matched delimiter.
+    EXPECT_EQ(SplitString("", std::regex {"\\s+"}),
+              std::vector<std::string> {""});
+    EXPECT_EQ(SplitString("a", std::regex {"\\s+"}),
+              std::vector<std::string> {"a"});
+
+    EXPECT_EQ(SplitString("a ", std::regex {"\\s+"}),
+              std::vector<std::string> {"a"});
+    EXPECT_EQ(SplitString("a b", std::regex {"\\s+"}),
+              (std::vector<std::string> {"a", "b"}));
+    EXPECT_EQ(SplitString("a,b", std::regex {","}),
+              (std::vector<std::string> {"a", "b"}));
+}
+
+TEST(StringTest, SplitStringToLines) {
+    // No matched delimiter.
+    EXPECT_EQ(SplitStringToLines(""), std::vector<std::string> {""});
+    EXPECT_EQ(SplitStringToLines("a"), std::vector<std::string> {"a"});
+
+    // Match `LF`.
+    EXPECT_EQ(SplitStringToLines("a\n"), std::vector<std::string> {"a"});
+    EXPECT_EQ(SplitStringToLines("a\nb"),
+              (std::vector<std::string> {"a", "b"}));
+
+    // Match `CRLF`.
+    EXPECT_EQ(SplitStringToLines("a\r\nb"),
+              (std::vector<std::string> {"a", "b"}));
+}
+
 TEST(SingletonTest, Construction) {
     using DefaultSingletonType = Singleton<Type>;
 

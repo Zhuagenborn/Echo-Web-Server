@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <cerrno>
+#include <iterator>
 #include <sstream>
 #include <system_error>
 
@@ -24,6 +25,38 @@ std::string StringToUpper(std::string str) noexcept {
         str.begin(), str.end(), str.begin(),
         [](const unsigned char c) noexcept { return std::toupper(c); });
     return str;
+}
+
+std::string ReplaceAllSubstring(std::string_view str,
+                                const std::string_view from,
+                                const std::string_view to) noexcept {
+    std::ostringstream ss;
+    while (!str.empty()) {
+        const auto begin {str.find(from)};
+        ss << str.substr(0, begin);
+        if (begin != std::string_view::npos) {
+            ss << to;
+            str = str.substr(begin + from.length());
+        } else {
+            break;
+        }
+    }
+
+    return ss.str();
+}
+
+std::vector<std::string> SplitString(const std::string& str,
+                                     const std::regex& pattern) noexcept {
+    std::vector<std::string> strs;
+    const std::sregex_token_iterator begin {str.cbegin(), str.cend(), pattern,
+                                            -1};
+    std::copy(begin, std::sregex_token_iterator {}, std::back_inserter(strs));
+    return strs;
+}
+
+std::vector<std::string> SplitStringToLines(const std::string& str) noexcept {
+    static const std::regex pattern {"\r*\n"};
+    return SplitString(str, pattern);
 }
 
 YAML::Node LoadYamlString(
