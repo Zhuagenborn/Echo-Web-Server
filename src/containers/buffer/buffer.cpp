@@ -32,16 +32,22 @@ Buffer::Buffer(Buffer&& o) noexcept :
     write_pos_ {o.write_pos_.load()} {}
 
 Buffer& Buffer::operator=(const Buffer& o) noexcept {
-    buf_ = o.buf_;
-    read_pos_ = o.read_pos_.load();
-    write_pos_ = o.write_pos_.load();
+    if (this != &o) {
+        buf_ = o.buf_;
+        read_pos_ = o.read_pos_.load();
+        write_pos_ = o.write_pos_.load();
+    }
+
     return *this;
 }
 
 Buffer& Buffer::operator=(Buffer&& o) noexcept {
-    buf_ = std::move(o.buf_);
-    read_pos_ = o.read_pos_.load();
-    write_pos_ = o.write_pos_.load();
+    if (this != &o) {
+        buf_ = std::move(o.buf_);
+        read_pos_ = o.read_pos_.load();
+        write_pos_ = o.write_pos_.load();
+    }
+
     return *this;
 }
 
