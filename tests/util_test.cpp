@@ -1,8 +1,12 @@
 #include "util.h"
+#include "containers/buffer.h"
+#include "io.h"
+#include "test_util.h"
 
 #include <gtest/gtest.h>
 
 using namespace ws;
+using namespace ws::test;
 
 
 //! A test type for singleton support.
@@ -182,4 +186,41 @@ TEST(ConceptTest, Addable) {
 
     // `std::string` + `char` ≠ `char`
     EXPECT_FALSE((Addable<std::string, char, char>));
+}
+
+TEST(MappedReadOnlyFile, Map) {
+    {
+        // The path refers to a directory.
+        MappedReadOnlyFile file;
+        EXPECT_THROW(file.Map("."), std::invalid_argument);
+    }
+
+    {
+        // Create a temporary file.
+        const auto [fd, path] {CreateTempTestFile()};
+        const RAII raii {std::pair {fd, path}, [](const auto& file) noexcept {
+                             close(file.first);
+                             unlink(file.second.c_str());
+                         }};
+
+        // Write data to the temporary file, otherwise it cannot be mapped.
+        constexpr std::string_view data {"hello"};
+        Buffer str {data};
+        io::FileDescriptor io {invalid_file_descriptor, fd};
+        io.ReadFrom(str);
+
+        MappedReadOnlyFile file;
+        const auto map_base {file.Map(path)};
+        EXPECT_TRUE(map_base);
+        EXPECT_EQ(file.Data(), map_base);
+        EXPECT_EQ(
+            (std::string_view {reinterpret_cast<char*>(map_base), file.Size()}),
+            data);
+
+        EXPECT_EQ(file.Path(), path);
+        EXPECT_EQ(file.Size(), data.length());
+
+        file.Unmap();
+        EXPECT_FALSE(file.Data());
+    }
 }
