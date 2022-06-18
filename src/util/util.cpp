@@ -1,10 +1,13 @@
 #include "util.h"
 
 #include <execinfo.h>
+#include <fcntl.h>
+#include <sys/mman.h>
 #include <sys/syscall.h>
 #include <unistd.h>
 
 #include <algorithm>
+#include <cassert>
 #include <cerrno>
 #include <iterator>
 #include <sstream>
@@ -115,6 +118,86 @@ std::string Backtrace(const std::size_t size, const std::size_t skip,
                           });
 
     return backtrace.str();
+}
+
+MappedReadOnlyFile::MappedReadOnlyFile() noexcept = default;
+
+MappedReadOnlyFile::MappedReadOnlyFile(MappedReadOnlyFile&& o) noexcept :
+    data_ {o.data_}, stat_ {std::move(o.stat_)}, path_ {std::move(o.path_)} {
+    o.data_ = nullptr;
+}
+
+MappedReadOnlyFile& MappedReadOnlyFile::operator=(
+    MappedReadOnlyFile&& o) noexcept {
+    if (this != &o) {
+        data_ = o.data_;
+        stat_ = std::move(o.stat_);
+        path_ = std::move(o.path_);
+        o.data_ = nullptr;
+    }
+
+    return *this;
+}
+
+MappedReadOnlyFile::~MappedReadOnlyFile() noexcept {
+    Unmap();
+}
+
+void MappedReadOnlyFile::Check() {
+    assert(!path_.empty());
+
+    if (stat(path_.data(), &stat_) < 0) {
+        ThrowLastSystemError();
+    } else if (S_ISDIR(stat_.st_mode)) {
+        throw std::invalid_argument {fmt::format("'{}' is a directory", path_)};
+    } else if (!(stat_.st_mode & S_IREAD)) {
+        throw std::runtime_error {
+            fmt::format("No permission to access '{}'", path_)};
+    }
+}
+
+std::byte* MappedReadOnlyFile::Map(std::string path) {
+    Unmap();
+
+    path_ = std::move(path);
+    Check();
+
+    const RAII fd {open(path_.c_str(), O_RDONLY), [](const auto fd) noexcept {
+                       if (IsValidFileDescriptor(fd)) {
+                           close(fd);
+                       }
+                   }};
+
+    if (const auto map_base {mmap(nullptr, stat_.st_size, PROT_READ,
+                                  MAP_PRIVATE, fd.Object(), 0)};
+        map_base != MAP_FAILED) {
+        data_ = static_cast<std::byte*>(map_base);
+        return data_;
+    } else {
+        ThrowLastSystemError();
+    }
+}
+
+void MappedReadOnlyFile::Unmap() noexcept {
+    if (data_) {
+        munmap(data_, stat_.st_size);
+        data_ = nullptr;
+    }
+
+    stat_ = {};
+    path_.clear();
+}
+
+std::size_t MappedReadOnlyFile::Size() const noexcept {
+    return stat_.st_size;
+}
+
+std::byte* MappedReadOnlyFile::Data() const noexcept {
+    return data_;
+}
+
+std::string_view MappedReadOnlyFile::Path() const noexcept {
+    return path_;
 }
 
 }  // namespace ws

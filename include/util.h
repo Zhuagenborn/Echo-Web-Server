@@ -18,6 +18,8 @@
 #include <fmt/format.h>
 #include <yaml-cpp/yaml.h>
 
+#include <sys/stat.h>
+
 #include <concepts>
 #include <functional>
 #include <initializer_list>
@@ -180,6 +182,60 @@ public:
 private:
     T obj_;
     Cleaner cleaner_;
+};
+
+/**
+ * RAII for a read-only file that has been mapped into memory.
+ * It encapsulates @p stat, @p mmap and @p munmap of Linux system.
+ */
+class MappedReadOnlyFile {
+public:
+    MappedReadOnlyFile() noexcept;
+
+    MappedReadOnlyFile(const MappedReadOnlyFile&) = delete;
+
+    MappedReadOnlyFile(MappedReadOnlyFile&&) noexcept;
+
+    MappedReadOnlyFile& operator=(const MappedReadOnlyFile&) = delete;
+
+    MappedReadOnlyFile& operator=(MappedReadOnlyFile&&) noexcept;
+
+    ~MappedReadOnlyFile() noexcept;
+
+    /**
+     * @brief Map a file into memory.
+     *
+     * @exception std::invalid_argument The path refers to a directory.
+     * @exception std::runtime_error    No permission to access the file.
+     * @exception std::system_error     Failed to map the file.
+     */
+    std::byte* Map(std::string path);
+
+    //! Unmap the file.
+    void Unmap() noexcept;
+
+    //! Get the file size.
+    std::size_t Size() const noexcept;
+
+    //! Get the file data.
+    std::byte* Data() const noexcept;
+
+    //! Get the file path.
+    std::string_view Path() const noexcept;
+
+private:
+    /**
+     * @brief Check the file.
+     *
+     * @exception std::invalid_argument The path refers to a directory.
+     * @exception std::runtime_error    No permission to access the file.
+     * @exception std::system_error     Other system errors.
+     */
+    void Check();
+
+    std::string path_;
+    struct stat stat_ {};
+    std::byte* data_ {nullptr};
 };
 
 template <typename T, typename U, typename Ret = T>
