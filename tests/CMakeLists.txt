@@ -22,6 +22,7 @@ target_sources(integrated-tests
         containers/heap_timer_test.cpp
         containers/thread_pool_test.cpp
         ip_test.cpp
+        http_test.cpp
 )
 
 target_link_libraries(integrated-tests
@@ -36,6 +37,7 @@ target_link_libraries(integrated-tests
         heap-timer
         thread-pool
         ip
+        http
 )
 
 gtest_discover_tests(integrated-tests)
