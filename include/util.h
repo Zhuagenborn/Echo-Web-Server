@@ -22,6 +22,7 @@
 #include <functional>
 #include <initializer_list>
 #include <memory>
+#include <regex>
 #include <string>
 #include <string_view>
 #include <utility>
@@ -41,6 +42,17 @@ std::string StringToLower(std::string str) noexcept;
 
 //! Convert a string into upper-case.
 std::string StringToUpper(std::string str) noexcept;
+
+//! Replace all occurrences of a sub-string in a string.
+std::string ReplaceAllSubstring(std::string_view str, std::string_view from,
+                                std::string_view to) noexcept;
+
+//! Split a string by a regex pattern.
+std::vector<std::string> SplitString(const std::string& str,
+                                     const std::regex& pattern) noexcept;
+
+//! Split a string into lines.
+std::vector<std::string> SplitStringToLines(const std::string& str) noexcept;
 
 /**
  * @brief Load a @p YAML node from a string.
