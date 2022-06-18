@@ -22,6 +22,7 @@ target_sources(test-bundle
         containers/heap_timer_test.cpp
         containers/thread_pool_test.cpp
         ip_test.cpp
+        http_test.cpp
 )
 
 target_link_libraries(test-bundle
@@ -36,6 +37,7 @@ target_link_libraries(test-bundle
         heap-timer
         thread-pool
         ip
+        http
 )
 
 gtest_discover_tests(test-bundle)
