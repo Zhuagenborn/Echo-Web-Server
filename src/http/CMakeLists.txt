@@ -11,6 +11,8 @@ target_sources(http
         http.cpp
         request.h
         request.cpp
+        response.h
+        response.cpp
 )
 
 target_link_libraries(http
@@ -26,6 +28,7 @@ target_link_libraries(http-test
     PRIVATE
         ${GTEST_LIBS}
         test-util
+        io
         http
         $<TARGET_PROPERTY:http,LINK_LIBRARIES>
 )
@@ -38,6 +41,7 @@ target_include_directories(http-test
 target_sources(http-test
     PRIVATE
         request_test.cpp
+        response_test.cpp
 )
 
 gtest_discover_tests(http-test)
