@@ -12,7 +12,13 @@
 
 #pragma once
 
+#include "containers/buffer.h"
+#include "ip.h"
+#include "util.h"
+
+#include <filesystem>
 #include <iostream>
+#include <memory>
 #include <string>
 #include <string_view>
 #include <unordered_map>
@@ -100,5 +106,109 @@ std::string HTMLPlaceholder(std::string_view key) noexcept;
  * This method will ignore parameters that do not have a corresponding placeholder in the template.
  */
 std::string PutParamIntoHTML(std::string html, const Parameters& params);
+
+/**
+ * @brief The core implementation of HTTP connection.
+ *
+ * @details
+ * A valid HTTP request must use @p POST method and contain two variables:
+ * - @p user: A user name.
+ * - @p msg: A message.
+ *
+ * @warning
+ * This class is an internal implementation class.
+ * Developers should use @p Connection instead of this.
+ */
+class ConnectionImpl {
+public:
+    using Ptr = std::shared_ptr<ConnectionImpl>;
+
+    //! Set the root directory.
+    static void SetRootDirectory(std::filesystem::path dir) noexcept;
+
+    //! Get the root directory.
+    static std::filesystem::path RootDirectory() noexcept;
+
+    ConnectionImpl(const ConnectionImpl&) = delete;
+
+    ConnectionImpl(ConnectionImpl&&) = delete;
+
+    ConnectionImpl& operator=(const ConnectionImpl&) = delete;
+
+    ConnectionImpl& operator=(ConnectionImpl&&) = delete;
+
+    //! Close the connection.
+    void Close() noexcept;
+
+    //! Whether the connection is valid.
+    bool Valid() const noexcept;
+
+    //! Get the socket.
+    FileDescriptor Socket() const noexcept;
+
+    //! Receive an HTTP request.
+    std::size_t Receive();
+
+    //! Send an HTTP response.
+    std::size_t Send();
+
+    //! Whether the connection keeps alive.
+    bool KeepAlive() const noexcept;
+
+    /**
+     * @brief Process the HTTP request.
+     *
+     * @details
+     * For the first request that does not contain a user's input,
+     * It will reply with a form for user input.
+     * Otherwise, it will reply both a user's previous input and a form for new input.
+     *
+     * @return @p false if the reading buffer for request is empty, otherwise @p true.
+     */
+    bool Process() noexcept;
+
+protected:
+    static constexpr std::string_view true_tag {"true"};
+
+    static constexpr std::string_view false_tag {"false"};
+
+    explicit ConnectionImpl(FileDescriptor socket) noexcept;
+
+    virtual ~ConnectionImpl() noexcept;
+
+    static std::filesystem::path root_dir_;
+
+    FileDescriptor socket_ {invalid_file_descriptor};
+    bool keep_alive_ {false};
+
+    IOBuffer read_buf_;
+    IOBuffer write_buf_;
+
+    //! The requested file.
+    MappedReadOnlyFile file_;
+};
+
+/**
+ * The HTTP connection.
+ */
+template <ValidIPAddr IPAddr>
+class Connection : public ConnectionImpl {
+public:
+    using Ptr = std::shared_ptr<Connection>;
+
+    explicit Connection(const FileDescriptor socket, IPAddr addr) noexcept :
+        ConnectionImpl {socket}, addr_ {std::move(addr)} {}
+
+    std::string IPAddress() const noexcept {
+        return addr_.IPAddress();
+    }
+
+    std::uint16_t Port() const noexcept {
+        return addr_.Port();
+    }
+
+private:
+    IPAddr addr_;
+};
 
 }  // namespace ws::http

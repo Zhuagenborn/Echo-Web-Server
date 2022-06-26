@@ -16,9 +16,13 @@ target_sources(http
 )
 
 target_link_libraries(http
-    PRIVATE
+    INTERFACE
+        ip
+    PUBLIC
         util
         buffer
+    PRIVATE
+        io
 )
 
 # Private Unit Test
@@ -28,7 +32,6 @@ target_link_libraries(http-test
     PRIVATE
         ${GTEST_LIBS}
         test-util
-        io
         http
         $<TARGET_PROPERTY:http,LINK_LIBRARIES>
 )

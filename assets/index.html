@@ -1,0 +1,24 @@
+<html>
+<title>ECHO SERVER</title>
+
+<body>
+    <p id="msg">
+        <$user$> said: "<$msg$>"
+    </p>
+    <hr>
+    <form action="index.html" method="post">
+        <p>
+            <label for="user">Name:</label><br>
+            <input type="text" name="user" required /><br>
+            <label for="user">Message:</label><br>
+            <input type="text" name="msg" required />
+        </p>
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+        document.getElementById("msg").hidden = <$hide-msg$>;
+    </script>
+</body>
+
+</html>
