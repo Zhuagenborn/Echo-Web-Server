@@ -81,6 +81,13 @@ constexpr bool IsValidFileDescriptor(FileDescriptor fd) noexcept {
     return fd >= 0;
 }
 
+/**
+ * @brief Set a file descriptor as non-blocking.
+ *
+ * @exception std::system_error Failed to set the file descriptor.
+ */
+void SetFileDescriptorAsNonblocking(FileDescriptor fd);
+
 //! Throw a @p std::system_error exception containing the last-error.
 [[noreturn]] void ThrowLastSystemError();
 

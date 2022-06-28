@@ -88,6 +88,13 @@ void ThrowLastSystemError() {
     throw std::system_error {errno, std::system_category()};
 }
 
+void SetFileDescriptorAsNonblocking(const FileDescriptor fd) {
+    assert(IsValidFileDescriptor(fd));
+    if (fcntl(fd, F_SETFL, fcntl(fd, F_GETFD) | O_NONBLOCK) < 0) {
+        ThrowLastSystemError();
+    }
+}
+
 std::uint32_t CurrentThreadId() noexcept {
     return static_cast<std::uint32_t>(syscall(SYS_gettid));
 }
