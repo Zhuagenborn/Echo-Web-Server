@@ -5,6 +5,14 @@ target_sources(${CMAKE_PROJECT_NAME}
         main.cpp
 )
 
+target_link_libraries(${CMAKE_PROJECT_NAME}
+    PRIVATE
+        web-server
+        log
+        config
+        util
+)
+
 set(HEADER_PATH ${PROJECT_SOURCE_DIR}/include)
 
 add_library(web-server INTERFACE)
