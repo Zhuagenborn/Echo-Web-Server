@@ -1,0 +1,13 @@
+server:
+  # The TCP listening port.
+  port: 10000
+  # The website folder.
+  asset_folder: "assets"
+  # The maximum alive time for client timers (in seconds).
+  # When a client's timer reaches zero and it has no activity, it will disconnect.
+  alive_time: 60
+loggers:
+  - name: root
+    level: info
+    appenders:
+      - type: stdout

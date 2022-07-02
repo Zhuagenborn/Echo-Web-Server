@@ -20,3 +20,4 @@ add_subdirectory(src)
 add_subdirectory(tests)
 
 file(COPY assets DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+file(COPY config.yaml DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
