@@ -75,7 +75,7 @@ TEST(BufferTest, ReadWriteOffset) {
 
     // `""` → `"hello"`
     std::string str {"hello"};
-    assert(str.length() >= 3);
+    ASSERT_TRUE(str.length() >= 3);
     buf.Append(str);
     EXPECT_EQ(buf.ReadableSize(), str.length());
 

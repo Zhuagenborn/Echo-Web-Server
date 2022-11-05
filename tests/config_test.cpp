@@ -191,7 +191,7 @@ TEST(ConfigurationTest, Visit) {
 
     cfg.Visit([&visitor](const VarBase::Ptr base) noexcept {
         const auto var {std::dynamic_pointer_cast<Var<int>>(base)};
-        assert(var);
+        ASSERT_TRUE(var);
         visitor.OnVisit(var->Value());
     });
 }
