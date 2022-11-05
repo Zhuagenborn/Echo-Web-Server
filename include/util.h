@@ -168,7 +168,7 @@ public:
      * @param cleaner   A cleaner.
      */
     explicit RAII(T obj, Cleaner cleaner) noexcept :
-        obj_ {obj}, cleaner_ {cleaner} {}
+        obj_ {std::move(obj)}, cleaner_ {std::move(cleaner)} {}
 
     RAII(const RAII&) = delete;
 
