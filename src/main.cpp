@@ -64,11 +64,11 @@ int main() {
     }
 
     try {
-        const auto port {config->Lookup<std::uint16_t>(port_tag)->Value()};
+        const auto port {config->Lookup<std::uint16_t>(port_tag)->GetValue()};
         const auto alive_time {
-            config->Lookup<std::size_t>(alive_time_tag)->Value()};
+            config->Lookup<std::size_t>(alive_time_tag)->GetValue()};
         const auto asset_folder {
-            config->Lookup<std::string>(asset_folder_tag)->Value()};
+            config->Lookup<std::string>(asset_folder_tag)->GetValue()};
 
         WebServerBuilder<IPv4Addr> builder {};
         builder.SetPort(port)

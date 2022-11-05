@@ -53,12 +53,12 @@ cfg::Var<std::unordered_set<LoggerConfig>>::Ptr SetListener(
                     switch (appender_cfg.type) {
                         case AppenderType::StdOut: {
                             appender = std::make_shared<StdOutAppender>(
-                                logger->DefaultFormatter());
+                                logger->GetDefaultFormatter());
                             break;
                         }
                         case AppenderType::File: {
                             appender = std::make_shared<FileAppender>(
-                                appender_cfg.file, logger->DefaultFormatter());
+                                appender_cfg.file, logger->GetDefaultFormatter());
                             break;
                         }
                         default: {

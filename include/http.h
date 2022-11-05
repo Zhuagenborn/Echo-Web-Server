@@ -127,7 +127,7 @@ public:
     static void SetRootDirectory(std::filesystem::path dir) noexcept;
 
     //! Get the root directory.
-    static std::filesystem::path RootDirectory() noexcept;
+    static std::filesystem::path GetRootDirectory() noexcept;
 
     ConnectionImpl(const ConnectionImpl&) = delete;
 

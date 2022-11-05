@@ -237,7 +237,7 @@ public:
     //! Convert the appender configuration into a @p YAML string for storage.
     virtual std::string ToYamlString() const noexcept = 0;
 
-    Formatter::Ptr Formatter() const noexcept;
+    Formatter::Ptr GetFormatter() const noexcept;
 
     void SetFormatter(Formatter::Ptr formatter) noexcept;
 
@@ -336,11 +336,11 @@ public:
 
     void ClearAppenders() noexcept;
 
-    log::Level Level() const noexcept;
+    log::Level GetLevel() const noexcept;
 
     void SetLevel(log::Level level) noexcept;
 
-    Formatter::Ptr DefaultFormatter() const noexcept;
+    Formatter::Ptr GetDefaultFormatter() const noexcept;
 
     /**
      * Set a default formatter.

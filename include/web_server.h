@@ -46,8 +46,8 @@ public:
     }
 
     //! Get the root directory.
-    static std::filesystem::path RootDirectory() noexcept {
-        return http::Connection<IPAddr>::RootDirectory();
+    static std::filesystem::path GetRootDirectory() noexcept {
+        return http::Connection<IPAddr>::GetRootDirectory();
     }
 
     /**
@@ -397,8 +397,8 @@ public:
         WebServer<IPAddr>::SetRootDirectory(std::move(dir));
     }
 
-    static std::filesystem::path RootDirectory() noexcept {
-        return WebServer<IPAddr>::RootDirectory();
+    static std::filesystem::path GetRootDirectory() noexcept {
+        return WebServer<IPAddr>::GetRootDirectory();
     }
 
     WebServerBuilder& SetPort(const std::uint16_t port) noexcept {

@@ -37,7 +37,7 @@ Appender::Appender(const std::string_view pattern) {
 Appender::Appender(const Formatter::Ptr formatter) noexcept :
     formatter_ {formatter} {}
 
-Formatter::Ptr Appender::Formatter() const noexcept {
+Formatter::Ptr Appender::GetFormatter() const noexcept {
     const std::lock_guard locker {mtx_};
     return formatter_;
 }

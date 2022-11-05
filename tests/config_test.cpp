@@ -78,7 +78,7 @@ TEST(ConfigurationVariableTest, Construction) {
     constexpr std::uint16_t val {80};
 
     const Var<std::uint16_t> var {name, val, description};
-    EXPECT_EQ(var.Value(), val);
+    EXPECT_EQ(var.GetValue(), val);
     EXPECT_EQ(var.Name(), name);
     EXPECT_EQ(var.Description(), description);
 }
@@ -89,7 +89,7 @@ TEST(ConfigurationVariableTest, ConvertedFromString) {
         Var<int> var {"", 0};
         constexpr int scalar {2};
         var.FromString(VarConverter<int, std::string> {}(scalar));
-        EXPECT_EQ(var.Value(), scalar);
+        EXPECT_EQ(var.GetValue(), scalar);
     }
 
     {
@@ -97,7 +97,7 @@ TEST(ConfigurationVariableTest, ConvertedFromString) {
         Var<std::vector<int>> var {"", {}};
         const std::vector<int> list {1, 2};
         var.FromString(VarConverter<std::vector<int>, std::string> {}(list));
-        EXPECT_EQ(var.Value(), list);
+        EXPECT_EQ(var.GetValue(), list);
     }
 
     {
@@ -105,7 +105,7 @@ TEST(ConfigurationVariableTest, ConvertedFromString) {
         Var<std::set<int>> var {"", {}};
         const std::set<int> set {1, 2};
         var.FromString(VarConverter<std::set<int>, std::string> {}(set));
-        EXPECT_EQ(var.Value(), set);
+        EXPECT_EQ(var.GetValue(), set);
     }
 
     {
@@ -114,7 +114,7 @@ TEST(ConfigurationVariableTest, ConvertedFromString) {
         const std::map<std::string, int> map {{"x", 0}, {"y", 1}};
         var.FromString(
             VarConverter<std::map<std::string, int>, std::string> {}(map));
-        EXPECT_EQ(var.Value(), map);
+        EXPECT_EQ(var.GetValue(), map);
     }
 }
 
@@ -161,14 +161,14 @@ TEST(ConfigurationTest, Lookup) {
     const auto x {cfg.Lookup<int>("x")};
     EXPECT_TRUE(x);
     if (x) {
-        EXPECT_EQ(x->Value(), 0);
+        EXPECT_EQ(x->GetValue(), 0);
     }
 
     // Set `x` from a `YAML` node.
     cfg.LoadYaml(node);
     EXPECT_TRUE(x);
     if (x) {
-        EXPECT_EQ(x->Value(), 1);
+        EXPECT_EQ(x->GetValue(), 1);
     }
 
     // The variable type is mismatched.
@@ -192,6 +192,6 @@ TEST(ConfigurationTest, Visit) {
     cfg.Visit([&visitor](const VarBase::Ptr base) noexcept {
         const auto var {std::dynamic_pointer_cast<Var<int>>(base)};
         ASSERT_TRUE(var);
-        visitor.OnVisit(var->Value());
+        visitor.OnVisit(var->GetValue());
     });
 }

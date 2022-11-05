@@ -198,7 +198,7 @@ void Logger::Log(const Event::Ptr event) noexcept {
 
 void Logger::AddAppender(const Appender::Ptr appender) noexcept {
     const std::lock_guard locker {mtx_};
-    if (!appender->Formatter()) {
+    if (!appender->GetFormatter()) {
         appender->SetFormatter(formatter_);
     }
 
@@ -220,7 +220,7 @@ void Logger::ClearAppenders() noexcept {
     appenders_.clear();
 }
 
-log::Level Logger::Level() const noexcept {
+log::Level Logger::GetLevel() const noexcept {
     const std::lock_guard locker {mtx_};
     return level_;
 }
@@ -230,7 +230,7 @@ void Logger::SetLevel(const log::Level level) noexcept {
     level_ = level;
 }
 
-Formatter::Ptr Logger::DefaultFormatter() const noexcept {
+Formatter::Ptr Logger::GetDefaultFormatter() const noexcept {
     const std::lock_guard locker {mtx_};
     return formatter_;
 }

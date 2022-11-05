@@ -42,7 +42,7 @@ TEST(LoggerConfigurationTest, Construction) {
     loggers->FromString(yaml);
 
     // Check whether the configuration has been set.
-    for (const auto& cfg : loggers->Value()) {
+    for (const auto& cfg : loggers->GetValue()) {
         EXPECT_TRUE(logger_names.contains(cfg.name));
 
         if (cfg.name == "root") {
@@ -64,21 +64,21 @@ TEST(LoggerConfigurationTest, Construction) {
     }
 
     // Check whether the loggers have been set.
-    for (const auto& cfg : loggers->Value()) {
+    for (const auto& cfg : loggers->GetValue()) {
         if (logger_names.contains(cfg.name)) {
             const auto logger {manager->FindLogger(cfg.name)};
             EXPECT_TRUE(logger);
             if (logger) {
                 EXPECT_EQ(logger->Name(), cfg.name);
                 if (cfg.name == "root") {
-                    EXPECT_EQ(logger->Level(), Level::Info);
+                    EXPECT_EQ(logger->GetLevel(), Level::Info);
                     EXPECT_EQ(logger->Capacity(), 50);
-                    EXPECT_EQ(logger->DefaultFormatter()->Pattern(),
+                    EXPECT_EQ(logger->GetDefaultFormatter()->Pattern(),
                               Formatter::Default()->Pattern());
                 } else if (cfg.name == "system") {
-                    EXPECT_EQ(logger->Level(), Level::Debug);
+                    EXPECT_EQ(logger->GetLevel(), Level::Debug);
                     EXPECT_EQ(logger->Capacity(), 0);
-                    EXPECT_EQ(logger->DefaultFormatter()->Pattern(), "%d");
+                    EXPECT_EQ(logger->GetDefaultFormatter()->Pattern(), "%d");
                 } else {
                     assert(false);
                 }

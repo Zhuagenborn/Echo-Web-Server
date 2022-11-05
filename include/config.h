@@ -347,14 +347,14 @@ public:
     Var& operator=(Var&&) = delete;
 
     std::string ToString() const noexcept override {
-        return ToStr {}(Value());
+        return ToStr {}(GetValue());
     }
 
     void FromString(const std::string_view str) override {
         SetValue(FromStr {}(str));
     }
 
-    T Value() const noexcept {
+    T GetValue() const noexcept {
         const std::shared_lock locker {mtx_};
         return val_;
     }

@@ -162,7 +162,7 @@ void ConnectionImpl::SetRootDirectory(std::filesystem::path dir) noexcept {
     root_dir_ = std::move(dir);
 }
 
-std::filesystem::path ConnectionImpl::RootDirectory() noexcept {
+std::filesystem::path ConnectionImpl::GetRootDirectory() noexcept {
     return root_dir_;
 }
 
