@@ -26,6 +26,8 @@ namespace ws {
  */
 class IPAddr {
 public:
+    virtual ~IPAddr() noexcept = default;
+
     //! Get the IP version.
     virtual int Version() const noexcept = 0;
 
