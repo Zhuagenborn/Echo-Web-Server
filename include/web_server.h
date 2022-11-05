@@ -213,7 +213,7 @@ private:
     void OnReceiveEvent(const FileDescriptor socket) {
         if (ExtendClientAliveTime(socket)) {
             auto client {Conn(socket)};
-            thread_pool_.Push([client = std::move(client), this]() {
+            thread_pool_.Push([client = std::move(client), this]() mutable {
                 ReceiveFrom(std::move(client));
             });
         }
@@ -223,7 +223,7 @@ private:
     void OnSendEvent(const FileDescriptor socket) {
         if (ExtendClientAliveTime(socket)) {
             auto client {Conn(socket)};
-            thread_pool_.Push([client = std::move(client), this]() {
+            thread_pool_.Push([client = std::move(client), this]() mutable {
                 SendTo(std::move(client));
             });
         }
