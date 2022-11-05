@@ -1,0 +1,62 @@
+name: Build the project and run unit tests with CMake and GoogleTest on Ubuntu
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+jobs:
+  cmake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download package information
+        run: sudo apt-get update
+      - name: Install Clang 14
+        run: sudo apt-get install -y clang-14
+      - name: Install CMake
+        run: sudo apt-get install -y cmake
+      - name: Install GoogleTest
+        run: |
+          sudo apt-get install -y libgtest-dev
+          sudo apt-get install -y libgmock-dev
+      - name: Install yaml-cpp
+        run: sudo apt-get install -y libyaml-cpp-dev
+      - name: Install {fmt}
+        run: sudo apt-get install -y libfmt-dev
+      - name: Check out the repository
+        uses: actions/checkout@main
+      - name: Create a building folder
+        run: mkdir build
+      - name: Generate project files
+        working-directory: ${{github.workspace}}/build
+        run: cmake ..
+      - name: Build the project
+        working-directory: ${{github.workspace}}/build
+        run: cmake --build .
+      - name: Tar building files
+        run: tar -cvf build.tar --directory=${{github.workspace}} build
+      - name: Upload building files
+        uses: actions/upload-artifact@main
+        with:
+          name: build
+          path: build.tar
+  google-test:
+    needs: cmake
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download package information
+        run: sudo apt-get update
+      - name: Install yaml-cpp
+        run: sudo apt-get install -y libyaml-cpp-dev
+      - name: Install {fmt}
+        run: sudo apt-get install -y libfmt-dev
+      - name: Check out the repository
+        uses: actions/checkout@main
+      - name: Download building files
+        uses: actions/download-artifact@main
+        with:
+          name: build
+      - name: Tar building files
+        run: tar -xvf build.tar
+      - name: Run tests
+        working-directory: ${{github.workspace}}/build
+        run: ctest -VV

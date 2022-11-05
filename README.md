@@ -111,6 +111,9 @@ The class diagram follows the [*Mermaid*](https://mermaid-js.github.io/mermaid/#
 ├── Dockerfile
 ├── LICENSE
 ├── README.md
+├── .github
+│   └── workflows
+│       └── cmake-googletest.yaml
 ├── assets
 │   ├── favicon.ico
 │   ├── http-status.html
