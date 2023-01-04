@@ -53,14 +53,14 @@ public:
  * @interface IReadWriter
  * @brief An I/O interface interacting with buffers.
  */
-class IReadWriter : public IReader, public IWriter {};
+class IReadWriter : public virtual IReader, public virtual IWriter {};
 
 /**
  * Null I/O.
  * It simply consumes a buffer's all readable or writable space,
  * without reading or writing anything.
  */
-class Null : public IReadWriter {
+class Null : public virtual IReadWriter {
 public:
     std::size_t WriteTo(Buffer& buf) noexcept override;
 
@@ -70,7 +70,7 @@ public:
 /**
  * I/O for string streams.
  */
-class StringStream : public IReadWriter {
+class StringStream : public virtual IReadWriter {
 public:
     /**
      * @brief Create an I/O object with string stream references.
@@ -108,7 +108,7 @@ private:
 /**
  * I/O for file descriptors.
  */
-class FileDescriptor : public IReadWriter {
+class FileDescriptor : public virtual IReadWriter {
 public:
     /**
      * @brief Create an I/O object with file descriptors.
