@@ -467,8 +467,7 @@ public:
     template <typename T>
     typename Var<T>::Ptr Lookup(const std::string_view name) const {
         if (const auto base {LookupBase(name)}; base) {
-            const auto var {std::dynamic_pointer_cast<Var<T>>(base)};
-            if (var) {
+            if (const auto var {std::dynamic_pointer_cast<Var<T>>(base)}; var) {
                 return var;
             } else {
                 throw std::invalid_argument {

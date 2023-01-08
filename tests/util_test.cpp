@@ -192,7 +192,7 @@ TEST(ConceptTest, Addable) {
     EXPECT_FALSE((Addable<std::string, char, char>));
 }
 
-TEST(MappedReadOnlyFile, Map) {
+TEST(MappedReadOnlyFileTest, Map) {
     {
         // The path refers to a directory.
         MappedReadOnlyFile file;
