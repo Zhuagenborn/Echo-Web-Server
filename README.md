@@ -107,6 +107,7 @@ The class diagram follows the [*Mermaid*](https://mermaid-js.github.io/mermaid/#
 
 ```
 .
+├── CITATION.cff
 ├── CMakeLists.txt
 ├── Dockerfile
 ├── LICENSE
@@ -224,19 +225,3 @@ The class diagram follows the [*Mermaid*](https://mermaid-js.github.io/mermaid/#
 ## License
 
 Distributed under the *MIT License*. See `LICENSE` for more information.
-
-## Contact
-
-- ***Chen Zhenshuo***
-
-  > ***GitHub***: https://github.com/czs108
-  >
-  > ***E-Mail***: chenzs108@outlook.com
-  >
-  > ***WeChat***: chenzs108
-
-- ***Liu Guowen***
-
-  > ***GitHub***: https://github.com/lgw1995
-  >
-  > ***E-Mail***: liu.guowen@outlook.com
