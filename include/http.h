@@ -27,7 +27,7 @@
 namespace ws::http {
 
 //! HTTP version: 1.1
-constexpr std::string_view version {"1.1"};
+inline constexpr std::string_view version {"1.1"};
 
 //! HTTP parameters consisting of key-value pairs.
 using Parameters = std::unordered_map<std::string, std::string>;
@@ -66,7 +66,7 @@ Method StringToMethod(std::string str);
 std::ostream& operator<<(std::ostream& os, Method method) noexcept;
 
 //! HTTP uses @p CRLF as the line separator.
-constexpr std::string_view new_line {"\r\n"};
+inline constexpr std::string_view new_line {"\r\n"};
 
 /**
  * Get a file's content type.

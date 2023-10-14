@@ -37,7 +37,7 @@ namespace ws {
 using FileDescriptor = int;
 
 //! A constant value representing invalid file descriptors.
-constexpr FileDescriptor invalid_file_descriptor {-1};
+inline constexpr FileDescriptor invalid_file_descriptor {-1};
 
 //! Convert a string into lower-case.
 std::string StringToLower(std::string str) noexcept;
