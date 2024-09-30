@@ -19,6 +19,7 @@
 #include <deque>
 #include <mutex>
 #include <optional>
+#include <utility>
 
 
 namespace ws {
@@ -215,12 +216,12 @@ const T& BlockDeque<T>::Back() const noexcept {
 
 template <typename T>
 T& BlockDeque<T>::Front() noexcept {
-    return const_cast<T&>(const_cast<const BlockDeque&>(*this).Front());
+    return const_cast<T&>(std::as_const(*this).Front());
 }
 
 template <typename T>
 T& BlockDeque<T>::Back() noexcept {
-    return const_cast<T&>(const_cast<const BlockDeque&>(*this).Back());
+    return const_cast<T&>(std::as_const(*this).Back());
 }
 
 template <typename T>
