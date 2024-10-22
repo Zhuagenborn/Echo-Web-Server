@@ -1,6 +1,7 @@
 /**
  * @file log.h
  * @brief The logging system.
+ *
  * @details
  * The supported tags and corresponding fields.
  * - @p m: Dispaly the event message.
@@ -79,9 +80,7 @@ std::ostream& operator<<(std::ostream& os, AppenderType type) noexcept;
  */
 AppenderType StringToAppenderType(std::string str);
 
-/**
- * The log event.
- */
+//! The log event.
 class Event {
 public:
     using Ptr = std::shared_ptr<Event>;
@@ -91,10 +90,10 @@ public:
     /**
      * @brief Create an event.
      *
-     * @param level     The event level.
-     * @param location  The event location.
+     * @param level The event level.
+     * @param location The event location.
      * @param thread_id The ID of the thread where the event occurred.
-     * @param time      The event time.
+     * @param time The event time.
      *
      * @todo Replace @p std::experimental::source_location with @p std::source_location.
      */
@@ -145,9 +144,7 @@ private:
 
 Event::Ptr operator<<(Event::Ptr event, std::string_view msg) noexcept;
 
-/**
- * The event formatter.
- */
+//! The event formatter.
 class Formatter {
 public:
     using Ptr = std::shared_ptr<Formatter>;
@@ -155,7 +152,6 @@ public:
     static Formatter::Ptr Default() noexcept;
 
     /**
-     * @interface Field
      * @brief
      * The field formatter for different information.
      * A formatter usually needs multiple field formatters, such as for thread ID and time.
@@ -169,7 +165,7 @@ public:
         /**
          * @brief Create a field formatter.
          *
-         * @param format    An optional format required for some fields.
+         * @param format An optional format required for some fields.
          */
         explicit Field(std::string_view format = "") noexcept;
 
@@ -180,6 +176,7 @@ public:
                             const Event& event) noexcept = 0;
 
         /**
+         * @brief
          * Get the tag representing a field.
          * The tag does not contain the preceding symbol @p %.
          */
@@ -189,7 +186,7 @@ public:
     /**
      * @brief Create a formatter.
      *
-     * @param pattern   A format pattern, consisting of multiple fields and their format.
+     * @param pattern A format pattern, consisting of multiple fields and their format.
      *
      * @exception std::invalid_argument The pattern is invalid.
      */
@@ -205,9 +202,7 @@ private:
     std::list<Field::Ptr> fields_;
 };
 
-/**
- * The appender that writes events to a specific place.
- */
+//! The appender that writes events to a specific place.
 class Appender {
 public:
     using Ptr = std::shared_ptr<Appender>;
@@ -253,9 +248,7 @@ protected:
     Formatter::Ptr formatter_;
 };
 
-/**
- * The appender that writes events to the standard output stream.
- */
+//! The appender that writes events to the standard output stream.
 class StdOutAppender : public Appender {
 public:
     using Ptr = std::shared_ptr<StdOutAppender>;
@@ -267,9 +260,7 @@ public:
     std::string ToYamlString() const noexcept override;
 };
 
-/**
- * The appender that writes events to a file.
- */
+//! The appender that writes events to a file.
 class FileAppender : public Appender {
 public:
     using Ptr = std::shared_ptr<FileAppender>;
@@ -295,6 +286,7 @@ private:
 };
 
 /**
+ * @brief
  * The logger, containing a list of appenders.
  * It can work synchronously or asynchronously.
  */
@@ -305,7 +297,7 @@ public:
     /**
      * @brief Create a logger.
      *
-     * @param name  A name.
+     * @param name A name.
      * @param level
      * The lowest event level.
      * Any event with a level lower than it will not be processed.
@@ -343,7 +335,10 @@ public:
     Formatter::Ptr GetDefaultFormatter() const noexcept;
 
     /**
+     * @brief
      * Set a default formatter.
+     *
+     * @details
      * If a newly added appender does not provide a formatter,
      * the default formatter will be used.
      */
@@ -392,6 +387,7 @@ Logger::Ptr operator<<(Logger::Ptr logger, Event::Ptr event) noexcept;
  *
  * @details
  * It can be used as follows:
+ *
  * @code {.cpp}
  * EventWriter {logger, event}.MessageStream() << "A message";
  * @endcode
@@ -417,9 +413,7 @@ private:
     Event::Ptr event_;
 };
 
-/**
- * The logger manager, maintaining a collection of loggers.
- */
+//! The logger manager, maintaining a collection of loggers.
 class Manager {
 public:
     /**

@@ -59,8 +59,8 @@ std::vector<std::string> SplitStringToLines(const std::string& str) noexcept;
 /**
  * @brief Load a @p YAML node from a string.
  *
- * @param str               A @p YAML string.
- * @param required_fields   Required fields.
+ * @param str A @p YAML string.
+ * @param required_fields Required fields.
  *
  * @exception std::invalid_argument The node does not contain all required fields.
  */
@@ -97,9 +97,9 @@ std::uint32_t CurrentThreadId() noexcept;
 /**
  * @brief Get a backtrace for the calling program.
  *
- * @param[out] stack    An address array.
- * @param size          The maximum number of addresses.
- * @param skip          The number of addresses to ignore.
+ * @param[out] stack An address array.
+ * @param size The maximum number of addresses.
+ * @param skip The number of addresses to ignore.
  */
 void Backtrace(std::vector<std::string>& stack, std::size_t size,
                std::size_t skip = 0) noexcept;
@@ -107,8 +107,8 @@ void Backtrace(std::vector<std::string>& stack, std::size_t size,
 /**
  * @brief Get a backtrace for the calling program.
  *
- * @param size  The maximum number of addresses.
- * @param skip  The number of addresses to ignore.
+ * @param size The maximum number of addresses.
+ * @param skip The number of addresses to ignore.
  * @return A string containing the backtrace.
  */
 std::string Backtrace(std::size_t size, std::size_t skip = 0,
@@ -117,7 +117,7 @@ std::string Backtrace(std::size_t size, std::size_t skip = 0,
 /**
  * @brief The singleton pattern interface for references.
  *
- * @tparam T    A type using the singleton pattern.
+ * @tparam T A type using the singleton pattern.
  * @tparam Args The arguments of the singleton instance, referring to one of its constructors.
  */
 template <typename T, typename... Args>
@@ -138,7 +138,7 @@ public:
 /**
  * @brief The singleton pattern interface for smart points.
  *
- * @tparam T    A type using the singleton pattern.
+ * @tparam T A type using the singleton pattern.
  * @tparam Args The argument types of the singleton instance, referring to one of its constructors.
  */
 template <typename T, typename... Args>
@@ -164,8 +164,8 @@ public:
     /**
      * @brief Create a RAII for an object.
      *
-     * @param obj       An object needing to be cleaned.
-     * @param cleaner   A cleaner.
+     * @param obj An object needing to be cleaned.
+     * @param cleaner A cleaner.
      */
     explicit RAII(T obj, Cleaner cleaner) noexcept :
         obj_ {std::move(obj)}, cleaner_ {std::move(cleaner)} {}
@@ -192,7 +192,10 @@ private:
 };
 
 /**
+ * @brief
  * RAII for a read-only file that has been mapped into memory.
+ *
+ * @details
  * It encapsulates @p stat, @p mmap and @p munmap of Linux system.
  */
 class MappedReadOnlyFile {
@@ -213,8 +216,8 @@ public:
      * @brief Map a file into memory.
      *
      * @exception std::invalid_argument The path refers to a directory.
-     * @exception std::runtime_error    No permission to access the file.
-     * @exception std::system_error     Failed to map the file.
+     * @exception std::runtime_error No permission to access the file.
+     * @exception std::system_error Failed to map the file.
      */
     std::byte* Map(std::string path);
 
@@ -235,8 +238,8 @@ private:
      * @brief Check the file.
      *
      * @exception std::invalid_argument The path refers to a directory.
-     * @exception std::runtime_error    No permission to access the file.
-     * @exception std::system_error     Other system errors.
+     * @exception std::runtime_error No permission to access the file.
+     * @exception std::system_error Other system errors.
      */
     void Check();
 

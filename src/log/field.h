@@ -149,7 +149,9 @@ public:
 };
 
 /**
- * The raw field.
+ * @brief The raw field.
+ *
+ * @details
  * It is an internal structure for conversion between field tags and sub-formatters.
  */
 struct RawField {
@@ -157,13 +159,18 @@ struct RawField {
     bool raw_str;
 
     /**
+     * @brief A raw string.
+     *
+     * @details
      * If the raw field is a raw string, this field will save its content.
      * Otherwise this field is a tag. For example, @p t means a thread ID.
      */
     std::string content;
 
     /**
-     * An optional format.
+     * @brief An optional format.
+     *
+     * @details
      * For example, @p %Y-%m-%d can be used for date display.
      * If the raw field is a raw string, this field will be empty.
      */

@@ -53,7 +53,7 @@ public:
     /**
      * @brief Create a web server.
      *
-     * @param port          A listening port.
+     * @param port A listening port.
      * @param alive_time
      * A maximum alive time for client timers.
      * A client's timer will be refreshed if it sends or receives data.
@@ -385,9 +385,7 @@ private:
     log::Logger::Ptr logger_;
 };
 
-/**
- * The builder for web servers.
- */
+//! The builder for web servers.
 template <ValidIPAddr IPAddr>
 class WebServerBuilder {
 public:

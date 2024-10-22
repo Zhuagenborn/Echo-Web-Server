@@ -69,6 +69,7 @@ std::ostream& operator<<(std::ostream& os, Method method) noexcept;
 inline constexpr std::string_view new_line {"\r\n"};
 
 /**
+ * @brief
  * Get a file's content type.
  * @p application/octet-stream is used to indicate that a file contains arbitrary binary data.
  */
@@ -93,6 +94,7 @@ char DecodeURLEncodedCharacter(const std::string& str);
 std::string DecodeURLEncodedString(const std::string& str);
 
 /**
+ * @brief
  * Get the HTML placeholder for an HTTP parameter.
  * It can be used to insert actual data into an HTML page.
  */
@@ -188,9 +190,7 @@ protected:
     MappedReadOnlyFile file_;
 };
 
-/**
- * The HTTP connection.
- */
+//! The HTTP connection.
 template <ValidIPAddr IPAddr>
 class Connection : public ConnectionImpl {
 public:

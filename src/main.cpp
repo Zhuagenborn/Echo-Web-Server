@@ -33,8 +33,8 @@ cfg::Config::Ptr InitDefaultConfig() noexcept {
 /**
  * @brief Load a local configuration.
  *
- * @param config    An existing configuration.
- * @param file      A configuration file.
+ * @param config An existing configuration.
+ * @param file A configuration file.
  */
 cfg::Config::Ptr LoadConfig(const cfg::Config::Ptr config,
                             const std::string& file) {

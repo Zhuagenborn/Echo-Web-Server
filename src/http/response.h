@@ -22,9 +22,7 @@
 
 namespace ws::http {
 
-/**
- * The HTTP response builder.
- */
+//! The HTTP response builder.
 class Response {
 public:
     /**
@@ -53,8 +51,8 @@ public:
     /**
      * @brief Build an HTTP response from a file request.
      *
-     * @param[out] buf  An output buffer where the response content will be written to.
-     * @param file      A file path. If it is a relative path, it will be relative to the root directory.
+     * @param[out] buf An output buffer where the response content will be written to.
+     * @param file A file path. If it is a relative path, it will be relative to the root directory.
      * @param[out] code The HTTP status code representing the file request.
      * @return
      * A read-only mapped file.  @p std::nullopt if the file request failed.
@@ -68,7 +66,7 @@ public:
     /**
      * @brief Build an HTTP response from a file request.
      *
-     * @param[out] buf  An output buffer where the response content will be written to.
+     * @param[out] buf An output buffer where the response content will be written to.
      * @param html
      * The path of an HTML page.
      * If it is a relative path, it will be relative to the root directory.
@@ -87,9 +85,9 @@ public:
     /**
      * @brief Build a response from HTTP status.
      *
-     * @param[out] buf  An output buffer where the response content will be written to.
-     * @param code      An HTTP status code.
-     * @param msg       An optional message.
+     * @param[out] buf An output buffer where the response content will be written to.
+     * @param code An HTTP status code.
+     * @param msg An optional message.
      */
     void Build(Buffer& buf, StatusCode code, std::string msg = "") noexcept;
 

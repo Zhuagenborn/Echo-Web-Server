@@ -45,7 +45,7 @@ namespace cfg {
  * The default implementation is using @p static_cast.
  *
  * @tparam From The original type.
- * @tparam To   A new type.
+ * @tparam To A new type.
  *
  * @note
  * If a custom type needs to be saved to a configuration file,
@@ -282,9 +282,7 @@ public:
     }
 };
 
-/**
- * Basic information about a configuration variable.
- */
+//! Basic information about a configuration variable.
 class VarBase {
 public:
     using Ptr = std::shared_ptr<VarBase>;
@@ -314,9 +312,9 @@ protected:
 /**
  * @brief The configuration variable.
  *
- * @tparam T        The variable type.
- * @tparam FromStr  A converter that can convert a string into a type-matching value.
- * @tparam ToStr    A converter that can convert a type-matching value into a string.
+ * @tparam T The variable type.
+ * @tparam FromStr A converter that can convert a string into a type-matching value.
+ * @tparam ToStr A converter that can convert a type-matching value into a string.
  */
 template <typename T, typename FromStr = VarConverter<std::string, T>,
           typename ToStr = VarConverter<T, std::string>>
@@ -329,8 +327,8 @@ public:
     /**
      * @brief The listener for value change events.
      *
-     * @param old_val   The old value before changing.
-     * @param new_val   The new value after changing.
+     * @param old_val The old value before changing.
+     * @param new_val The new value after changing.
      */
     using OnChange = std::function<void(const T& old_val, const T& new_val)>;
 
@@ -387,7 +385,7 @@ public:
     /**
      * @brief Remove a listener.
      *
-     * @param key   A unique key corresponding to the listener.
+     * @param key A unique key corresponding to the listener.
      */
     void RemoveListener(const std::uint64_t key) noexcept {
         const std::unique_lock locker {mtx_};
@@ -397,7 +395,7 @@ public:
     /**
      * @brief Add a listener for value change events.
      *
-     * @param listener  A listener.
+     * @param listener A listener.
      * @return A unique key corresponding to the listener.
      */
     std::uint64_t AddListener(OnChange listener) noexcept {
@@ -420,9 +418,7 @@ private:
     std::unordered_map<std::uint64_t, OnChange> listeners_;
 };
 
-/**
- * The configuration.
- */
+//! The configuration.
 class Config {
 public:
     using Ptr = std::shared_ptr<Config>;
@@ -458,8 +454,8 @@ public:
     /**
      * @brief Lookup a variable by its name.
      *
-     * @tparam T    A variable type.
-     * @param name  A variable name.
+     * @tparam T A variable type.
+     * @param name A variable name.
      * @return The found variable or @p nullptr.
      *
      * @exception std::invalid_argument The type of the found variable does not match @p T.

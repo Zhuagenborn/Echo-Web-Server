@@ -32,10 +32,12 @@ namespace ws {
 /**
  * @brief
  * The timer system based on a min-heap.
+ *
+ * @details
  * Timers are maintained in a min-heap ordered by expiration time.
  * When a timer expires, its callback will be invoked.
  *
- * @tparam Key  The type of node keys.
+ * @tparam Key The type of node keys.
  */
 template <typename Key>
 class HeapTimer {
@@ -63,8 +65,8 @@ public:
     /**
      * @brief Adjust a node's expiration time.
      *
-     * @param key           A key.
-     * @param expiration    A new duration from now to its expiration time.
+     * @param key A key.
+     * @param expiration A new duration from now to its expiration time.
      *
      * @exception std::out_of_range The timer system does not contain any node with the specific key.
      */
@@ -73,8 +75,8 @@ public:
     /**
      * @brief Adjust a node's expiration time.
      *
-     * @param key           A key.
-     * @param expiration    A new expiration time.
+     * @param key A key.
+     * @param expiration A new expiration time.
      *
      * @exception std::out_of_range The timer system does not contain any node with the specific key.
      */
@@ -83,9 +85,9 @@ public:
     /**
      * @brief Push a node into the timer system.
      *
-     * @param key           A key.
-     * @param expiration    A duration from now to its expiration time.
-     * @param callback      A time-out callback that will be invoked when the node expires.
+     * @param key A key.
+     * @param expiration A duration from now to its expiration time.
+     * @param callback A time-out callback that will be invoked when the node expires.
      */
     void Push(const Key& key, Clock::duration expiration,
               TimeOutCallback callback) noexcept;
@@ -93,9 +95,9 @@ public:
     /**
      * @brief Push a node into the timer system.
      *
-     * @param key           A key.
-     * @param expiration    An expiration time.
-     * @param callback      A time-out callback that will be invoked when the node expires.
+     * @param key A key.
+     * @param expiration An expiration time.
+     * @param callback A time-out callback that will be invoked when the node expires.
      */
     void Push(const Key& key, Clock::time_point expiration,
               TimeOutCallback callback) noexcept;
@@ -212,6 +214,7 @@ private:
     std::optional<std::size_t> Parent(std::size_t idx) const noexcept;
 
     /**
+     * @brief
      * Get the index of a node's child that has a shorter expiration time,
      * or @p std::nullopt if it does not exist.
      */

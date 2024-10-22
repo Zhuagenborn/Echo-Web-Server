@@ -42,6 +42,7 @@ enum class NewLine {
  * @brief An auto-expandable buffer, supporting storing bytes and strings.
  *
  * @details
+ * @code
  *                 Writing Offset ──────┐
  * Reading Offset ─────┐                │
  *                     │                │
@@ -49,6 +50,8 @@ enum class NewLine {
  * ┌───────────────────▼────────────────▼────────────────┐
  * │ Prependable Bytes │ Readable Bytes │ Writable Bytes │
  * └───────────────────┴────────────────┴────────────────┘
+ * @endcode
+ *
  * Prependable space can be reused.
  */
 class Buffer {
@@ -163,9 +166,7 @@ protected:
     std::atomic<std::size_t> write_pos_ {0};
 };
 
-/**
- * An enhanced buffer supporting I/O reading and writing.
- */
+//! An enhanced buffer supporting I/O reading and writing.
 class IOBuffer : public Buffer {
 public:
     using Buffer::Buffer;

@@ -24,7 +24,10 @@
 namespace ws {
 
 /**
+ * @brief
  * The I/O event notification facility.
+ *
+ * @details
  * It monitors multiple file descriptors to see if I/O is possible on any of them.
  */
 class Epoller {
@@ -34,7 +37,7 @@ public:
     /**
      * @brief Create an epoller.
      *
-     * @param capacity  The maximum number of file descriptors to be monitored.
+     * @param capacity The maximum number of file descriptors to be monitored.
      *
      * @exception std::system_error Creation failed.
      */
@@ -65,7 +68,7 @@ public:
     /**
      * @brief Wait for events.
      *
-     * @param time_out  The maximum time to wait.
+     * @param time_out The maximum time to wait.
      * @return
      * The number of file descriptors ready for the requested I/O,
      * or zero if getting a time-out.
@@ -94,8 +97,8 @@ private:
     /**
      * @brief Perform control operations on a file descriptor.
      *
-     * @param ctl   Addition, deletion or modification.
-     * @param fd    A file descriptor.
+     * @param ctl Addition, deletion or modification.
+     * @param fd A file descriptor.
      * @param events
      * The event associated with the file descriptor.
      * It can be @p std::nullopt if the operation is deletion.

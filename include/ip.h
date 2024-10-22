@@ -20,10 +20,7 @@
 
 namespace ws {
 
-/**
- * @interface IPAddr
- * @brief The interface of IP address.
- */
+//! The interface of IP address.
 class IPAddr {
 public:
     virtual ~IPAddr() noexcept = default;
@@ -42,9 +39,7 @@ public:
     virtual std::string IPAddress() const noexcept = 0;
 };
 
-/**
- * The IPv4 address.
- */
+//! The IPv4 address.
 class IPv4Addr : public IPAddr {
 public:
     static constexpr int version {AF_INET};
@@ -76,9 +71,7 @@ private:
     sockaddr_in raw_ {};
 };
 
-/**
- * The IPv6 address.
- */
+//! The IPv6 address.
 class IPv6Addr : public IPAddr {
 public:
     static constexpr int version {AF_INET6};
@@ -110,12 +103,6 @@ private:
     sockaddr_in6 raw_ {};
 };
 
-/**
- * @concept ValidIPAddr
- * @brief A valid IP address.
- *
- * @tparam T    @p IPv4Addr or @p IPv6Addr.
- */
 template <typename T>
 concept ValidIPAddr = std::same_as<T, IPv4Addr> || std::same_as<T, IPv6Addr>;
 

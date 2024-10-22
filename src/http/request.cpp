@@ -8,10 +8,7 @@
 
 namespace ws::http {
 
-/**
- * @interface State
- * @brief The interface of parsing state.
- */
+//! The interface of parsing state.
 class Request::State {
 public:
     explicit State(Request& parser) noexcept : parser_ {parser} {}

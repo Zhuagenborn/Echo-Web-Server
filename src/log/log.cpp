@@ -205,9 +205,6 @@ void Logger::AddAppender(const Appender::Ptr appender) noexcept {
     appenders_.push_back(appender);
 }
 
-/**
- * @todo Replace @p std::remove_if with @p std::ranges::remove_if.
- */
 void Logger::RemoveAppender(const Appender::Ptr appender) noexcept {
     const std::lock_guard locker {mtx_};
     std::remove_if(

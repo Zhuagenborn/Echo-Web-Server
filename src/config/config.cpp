@@ -13,19 +13,21 @@ namespace {
  * @details
  * The return value recursively contains members on every level, not just leaves.
  * For example, for the following @p YAML file:
+ *
  * @code {.yaml}
  * system:
  *   port: 80
  *   ip: "127.0.0.1"
  * @endcode
+ *
  * This method will return a list of fours items:
  * - A node with an empty name representing the entire node.
  * - A node with named @p system representing the port and ip address.
  * - A node with named @p system.port representing the port.
  * - A node with named @p system.ip representing the ip address.
  *
- * @param node      A @p YAML node.
- * @param prefix    A prefix representing the node level.
+ * @param node A @p YAML node.
+ * @param prefix A prefix representing the node level.
  * @return A list of members and names representing their levels.
  */
 std::list<std::pair<std::string, YAML::Node>> ExtractMembers(

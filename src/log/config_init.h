@@ -5,6 +5,7 @@
  * @details
  * @p YAML configuration.
  * An example is shown below:
+ *
  * @code {.yaml}
  * loggers:
  *   - name: root
@@ -37,9 +38,7 @@
 
 namespace ws::log {
 
-/**
- * The appender configuration.
- */
+//! The appender configuration.
 struct AppenderConfig {
     AppenderType type;
 
@@ -54,9 +53,7 @@ bool operator==(const AppenderConfig&, const AppenderConfig&) noexcept;
 
 bool operator!=(const AppenderConfig&, const AppenderConfig&) noexcept;
 
-/**
- * The logger configuration.
- */
+//! The logger configuration.
 struct LoggerConfig {
     std::string name;
 
@@ -77,9 +74,7 @@ bool operator!=(const LoggerConfig&, const LoggerConfig&) noexcept;
 
 }  // namespace ws::log
 
-/**
- * The hash for unordered sets.
- */
+//! The hash for unordered sets.
 template <>
 struct std::hash<ws::log::LoggerConfig> {
     std::size_t operator()(const ws::log::LoggerConfig& logger) const noexcept {
@@ -192,8 +187,8 @@ namespace log {
 /**
  * @brief Set the listener callback for a logger configuration.
  *
- * @param loggers   A logger configuration.
- * @param manager   A logger manager. It will adjust its loggers when the configuration changes.
+ * @param loggers A logger configuration.
+ * @param manager A logger manager. It will adjust its loggers when the configuration changes.
  */
 cfg::Var<std::unordered_set<LoggerConfig>>::Ptr SetListener(
     cfg::Var<std::unordered_set<LoggerConfig>>::Ptr loggers,

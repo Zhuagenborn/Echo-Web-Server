@@ -25,6 +25,7 @@ namespace ws::test {
  *
  * @details
  * The format is @p SuiteName.CaseName.
+ *
  * @code {.cpp}
  * TEST(SuiteName, CaseName) {
  *     // ...

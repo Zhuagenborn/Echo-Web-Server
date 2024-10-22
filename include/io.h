@@ -25,10 +25,7 @@ class Buffer;
 
 namespace io {
 
-/**
- * @interface IReader
- * @brief An I/O reading interface interacting with buffers.
- */
+//! An I/O reading interface interacting with buffers.
 class IReader {
 public:
     virtual ~IReader() noexcept = default;
@@ -37,10 +34,7 @@ public:
     virtual std::size_t ReadFrom(Buffer& buf) = 0;
 };
 
-/**
- * @interface IWriter
- * @brief An I/O writing interface interacting with buffers.
- */
+//! An I/O writing interface interacting with buffers.
 class IWriter {
 public:
     virtual ~IWriter() noexcept = default;
@@ -49,14 +43,13 @@ public:
     virtual std::size_t WriteTo(Buffer& buf) = 0;
 };
 
-/**
- * @interface IReadWriter
- * @brief An I/O interface interacting with buffers.
- */
+//! An I/O interface interacting with buffers.
 class IReadWriter : public virtual IReader, public virtual IWriter {};
 
 /**
- * Null I/O.
+ * @brief Null I/O.
+ *
+ * @details
  * It simply consumes a buffer's all readable or writable space,
  * without reading or writing anything.
  */
@@ -67,9 +60,7 @@ public:
     std::size_t ReadFrom(Buffer& buf) noexcept override;
 };
 
-/**
- * I/O for string streams.
- */
+//! I/O for string streams.
 class StringStream : public virtual IReadWriter {
 public:
     /**
@@ -105,9 +96,7 @@ private:
     std::ostream& write_;
 };
 
-/**
- * I/O for file descriptors.
- */
+//! I/O for file descriptors.
 class FileDescriptor : public virtual IReadWriter {
 public:
     /**
@@ -135,14 +124,8 @@ public:
 
     FileDescriptor& operator=(FileDescriptor&&) = delete;
 
-    /**
-     * @exception std::system_error Failed to read data from the descriptor.
-     */
     std::size_t WriteTo(Buffer& buf) override;
 
-    /**
-     * @exception std::system_error Failed to write data to the descriptor.
-     */
     std::size_t ReadFrom(Buffer& buf) override;
 
 private:

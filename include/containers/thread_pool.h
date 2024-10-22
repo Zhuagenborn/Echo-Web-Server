@@ -26,9 +26,7 @@
 
 namespace ws {
 
-/**
- * The thread pool.
- */
+//! The thread pool.
 class ThreadPool {
 public:
     using Task = std::function<void()>;
@@ -62,15 +60,16 @@ public:
     void Push(Task task) noexcept;
 
     /**
-     * Close the thread pool.
+     * @brief Close the thread pool.
+     *
+     * @details
      * The remaining tasks will not be executed.
      */
     void Close() noexcept;
 
 private:
     /**
-     * @brief
-     * Continually pop and execute tasks.
+     * @brief Continually pop and execute tasks.
      *
      * @warning
      * Any exceptions raised in callbacks will not be rethrown.

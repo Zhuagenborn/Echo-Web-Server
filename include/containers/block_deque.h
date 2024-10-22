@@ -24,9 +24,7 @@
 
 namespace ws {
 
-/**
- * The block double-ended queue.
- */
+//! The block double-ended queue.
 template <typename T>
 class BlockDeque {
 public:

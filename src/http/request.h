@@ -21,9 +21,7 @@
 
 namespace ws::http {
 
-/**
- * The HTTP request parser.
- */
+//! The HTTP request parser.
 class Request {
 public:
     class State;

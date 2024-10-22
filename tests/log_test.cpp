@@ -7,9 +7,7 @@
 
 using namespace ws::log;
 
-/**
- * The fake appender that writes events to a string stream.
- */
+//! The fake appender that writes events to a string stream.
 class FakeAppender : public Appender {
 public:
     using Ptr = std::shared_ptr<FakeAppender>;
