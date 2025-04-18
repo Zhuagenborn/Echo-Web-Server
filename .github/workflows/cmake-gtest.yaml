@@ -10,8 +10,6 @@ jobs:
     steps:
       - name: Download package information
         run: sudo apt-get update
-      - name: Install Clang 14
-        run: sudo apt-get install -y clang-14
       - name: Install CMake
         run: sudo apt-get install -y cmake
       - name: Install GoogleTest

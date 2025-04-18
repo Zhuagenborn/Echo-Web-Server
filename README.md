@@ -114,7 +114,7 @@ The class diagram follows the [*Mermaid*](https://mermaid-js.github.io/mermaid/#
 ├── README.md
 ├── .github
 │   └── workflows
-│       └── cmake-googletest.yaml
+│       └── cmake-gtest.yaml
 ├── assets
 │   ├── favicon.ico
 │   ├── http-status.html

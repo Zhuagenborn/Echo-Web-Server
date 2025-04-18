@@ -4,7 +4,7 @@ RUN apt-get update
 
 RUN apt-get install -y cmake
 
-RUN apt-get install -y clang
+RUN apt-get install -y g++
 
 RUN apt-get install -y libgtest-dev && apt-get install -y libgmock-dev
 
