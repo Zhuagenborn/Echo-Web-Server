@@ -22,7 +22,7 @@ RUN mkdir build
 
 WORKDIR $work_dir/build
 
-RUN cmake ..
+RUN cmake -DECHO_WEB_SERVER_BUILD_TESTS=ON ..
 
 RUN cmake --build .
 

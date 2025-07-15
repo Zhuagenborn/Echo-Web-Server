@@ -16,6 +16,6 @@ target_link_libraries(test-util
         util
         log
     PRIVATE
-        ${GTEST_LIBS}
-        ${GMOCK_LIBS}
+        ${GTEST_LIB}
+        ${GMOCK_LIB}
 )

@@ -30,7 +30,7 @@ add_executable(http-test)
 
 target_link_libraries(http-test
     PRIVATE
-        ${GTEST_LIBS}
+        ${GTEST_LIB}
         test-util
         http
         $<TARGET_PROPERTY:http,LINK_LIBRARIES>

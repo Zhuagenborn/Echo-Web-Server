@@ -2,8 +2,26 @@ name: Build the project and run unit tests with CMake and GoogleTest on Ubuntu
 on:
   push:
     branches: [main, master]
+    paths:
+      - '!docs/**'
+      - '!assets/**'
+      - '!**/*.md'
+      - '.github/workflows/cmake-gtest.yaml'
+      - 'include/**'
+      - 'src/**'
+      - 'tests/**'
+      - '**/CMakeLists.txt'
   pull_request:
     branches: [main, master]
+    paths:
+      - '!docs/**'
+      - '!assets/**'
+      - '!**/*.md'
+      - '.github/workflows/cmake-gtest.yaml'
+      - 'include/**'
+      - 'src/**'
+      - 'tests/**'
+      - '**/CMakeLists.txt'
 jobs:
   cmake:
     runs-on: ubuntu-latest
@@ -26,7 +44,7 @@ jobs:
         run: mkdir build
       - name: Generate project files
         working-directory: ${{github.workspace}}/build
-        run: cmake ..
+        run: cmake -DECHO_WEB_SERVER_BUILD_TESTS=ON ..
       - name: Build the project
         working-directory: ${{github.workspace}}/build
         run: cmake --build .
@@ -37,7 +55,7 @@ jobs:
         with:
           name: build
           path: build.tar
-  google-test:
+  gtest:
     needs: cmake
     runs-on: ubuntu-latest
     steps:

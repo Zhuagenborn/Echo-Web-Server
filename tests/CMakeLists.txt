@@ -7,8 +7,8 @@ target_include_directories(test-bundle
 
 target_link_libraries(test-bundle
     PRIVATE
-        ${GTEST_LIBS}
-        ${GMOCK_LIBS}
+        ${GTEST_LIB}
+        ${GMOCK_LIB}
 )
 
 target_sources(test-bundle

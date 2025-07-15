@@ -28,7 +28,7 @@ add_executable(log-test)
 
 target_link_libraries(log-test
     PRIVATE
-        ${GTEST_LIBS}
+        ${GTEST_LIB}
         log
         $<TARGET_PROPERTY:log,LINK_LIBRARIES>
 )
