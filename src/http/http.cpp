@@ -270,11 +270,11 @@ bool ConnectionImpl::Process() noexcept {
             if (auto file {
                     response.Build(write_buf_, std::move(path), status_code)};
                 file.has_value()) {
-                file_ = std::move(file.value());
+                file_ = std::move(*file);
             }
         }
     } else {
-        response.Build(write_buf_, StatusCode::BadRequest, error_msg.value());
+        response.Build(write_buf_, StatusCode::BadRequest, *error_msg);
     }
 
     return true;

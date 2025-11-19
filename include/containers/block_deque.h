@@ -235,8 +235,7 @@ std::optional<T> BlockDeque<T>::Pop(
 
     std::unique_lock locker {mtx_};
     if (time_out.has_value()) {
-        if (!consumer_cond_.wait_for(locker, time_out.value(),
-                                     not_empty_or_closed)) {
+        if (!consumer_cond_.wait_for(locker, *time_out, not_empty_or_closed)) {
             return std::nullopt;
         }
     } else {

@@ -69,7 +69,7 @@ void Epoller::SetFileDescriptor(const Control ctl, const ws::FileDescriptor fd,
     event.data.fd = fd;
     if (ctl != Control::Delete) {
         assert(events.has_value());
-        event.events = events.value();
+        event.events = *events;
     }
 
     if (epoll_ctl(epoll_fd_, op_codes.at(ctl), fd, &event) < 0) {

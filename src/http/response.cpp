@@ -91,7 +91,7 @@ void Response::Build(Buffer& buf, const Parameters* const params) noexcept {
             AddMappedContent(buf);
         }
     } else {
-        AddPredefinedErrorContent(buf, error_msg.value());
+        AddPredefinedErrorContent(buf, *error_msg);
     }
 }
 

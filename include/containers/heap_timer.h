@@ -290,7 +290,7 @@ void HeapTimer<Key>::Adjust(const Key& key, const Clock::time_point expiration,
                             const std::optional<TimeOutCallback> callback) {
     const auto idx {key_to_idx_.at(key)};
     if (callback.has_value()) {
-        nodes_[idx].callback = callback.value();
+        nodes_[idx].callback = *callback;
     }
 
     const auto shift_up {expiration < nodes_[idx].expiration};
@@ -338,10 +338,10 @@ void HeapTimer<Key>::ShiftUp(std::size_t idx) noexcept {
     assert(ValidIndex(idx));
     auto parent {Parent(idx)};
     while (parent.has_value()) {
-        assert(parent.value() < idx);
-        if (nodes_[parent.value()] >= nodes_[idx]) {
-            Swap(parent.value(), idx);
-            idx = parent.value();
+        assert(*parent < idx);
+        if (nodes_[*parent] >= nodes_[idx]) {
+            Swap(*parent, idx);
+            idx = *parent;
             parent = Parent(idx);
         } else {
             break;
@@ -354,10 +354,10 @@ void HeapTimer<Key>::ShiftDown(std::size_t idx) noexcept {
     assert(ValidIndex(idx));
     auto child {SmallChild(idx)};
     while (child.has_value()) {
-        assert(child.value() > idx);
-        if (nodes_[idx] > nodes_[child.value()]) {
-            Swap(child.value(), idx);
-            idx = child.value();
+        assert(*child > idx);
+        if (nodes_[idx] > nodes_[*child]) {
+            Swap(*child, idx);
+            idx = *child;
             child = SmallChild(idx);
         } else {
             break;

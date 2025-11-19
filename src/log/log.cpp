@@ -171,7 +171,7 @@ Logger::~Logger() noexcept {
 void Logger::AsyncLogProc() noexcept {
     while (true) {
         if (const auto event {event_deque_->Pop()}; event) {
-            SyncLog(*event.value());
+            SyncLog(**event);
         } else {
             return;
         }
